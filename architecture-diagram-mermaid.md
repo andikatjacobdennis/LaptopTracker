@@ -211,7 +211,7 @@ flowchart TB
     class GeoProviders external
 ```
 
-**Sequence Diagram with Correct Names:**
+**Sequence Diagram:**
 
 ```mermaid
 sequenceDiagram
