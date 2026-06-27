@@ -13,25 +13,25 @@ A Windows service that periodically reports device information to a configurable
 ## Features
 
 ### Core Functionality
-- ✅ Windows Service with automatic startup
-- ✅ Configurable reporting interval (default: 300 seconds / 5 minutes)
-- ✅ HTTPS JSON reporting with retry logic
-- ✅ Automatic retries with exponential backoff
-- ✅ Comprehensive device information collection
+- Windows Service with automatic startup
+- Configurable reporting interval (default: 300 seconds / 5 minutes)
+- HTTPS JSON reporting with retry logic
+- Automatic retries with exponential backoff
+- Comprehensive device information collection
 
 ### Device Information Collected
-- 🔹 **System Info**: Device ID, Hostname, Username, OS Version
-- 🔹 **Network**: Public IP, Local IP, MAC Address, Wi-Fi SSID
-- 🔹 **Location**: Approximate Geo-location (via IP geolocation)
-- 🔹 **Hardware**: CPU, RAM, Disk Usage
-- 🔹 **Battery**: Status, Percentage, Charging State
+- **System Info**: Device ID, Hostname, Username, OS Version
+- **Network**: Public IP, Local IP, MAC Address, Wi-Fi SSID
+- **Location**: Approximate Geo-location (via IP geolocation)
+- **Hardware**: CPU, RAM, Disk Usage
+- **Battery**: Status, Percentage, Charging State
 
 ### Management Features
-- 🖥️ CLI management utility with full command support
-- 📝 Detailed structured logging with Serilog
-- 🔄 Configurable settings stored in JSON
-- 🧪 Test mode for configuration validation
-- 📊 Service status monitoring
+- CLI management utility with full command support
+- Detailed structured logging with Serilog
+- Configurable settings stored in JSON
+- Test mode for configuration validation
+- Service status monitoring
 
 ## Projects
 
