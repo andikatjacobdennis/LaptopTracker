@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="Tracker.Cli/Tracker.Cli.csproj" />
+  <Project Path="Tracker.Server/Tracker.Server.csproj" />
+  <Project Path="Tracker.Service/Tracker.Service.csproj" />
+  <Project Path="Tracker.Shared/Tracker.Shared.csproj" />
+</Solution>
