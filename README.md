@@ -55,14 +55,14 @@ A Windows service that periodically reports device information to a configurable
 dotnet build -c Release
 ```
 
-### 2. Install the Service (Run as Administrator)
-```bash
-Tracker.Cli.exe install
-```
-
-### 3. Configure Webhook
+### 2. Configure Webhook
 ```bash
 Tracker.Cli.exe set webhook https://your-server.com/api/report
+```
+
+### 3. Install the Service (Run as Administrator)
+```bash
+Tracker.Cli.exe install
 ```
 
 ### 4. Start the Service (Run as Administrator)
