@@ -216,91 +216,31 @@ Get-Content "%ProgramData%\Tracker\logs\service-.log" -Wait
 ## Architecture
 
 ```mermaid
-graph TB
-    subgraph "Client System (Windows)"
-        CLI[Tracker.Cli<br/>Command Line Interface]
-        Service[Tracker.Service<br/>Windows Background Service]
-        Config[Configuration<br/>%ProgramData%\Tracker\config.json]
-        Logs[Logs<br/>%ProgramData%\Tracker\logs\]
-        DeviceInfo[Device Information Collector]
-        
-        subgraph "Components"
-            SystemInfo[System Info<br/>Device ID, Hostname, OS]
-            Network[Network Info<br/>IP, MAC, Wi-Fi]
-            Hardware[Hardware Info<br/>CPU, RAM, Disk]
-            Battery[Battery Info<br/>Status, Percentage]
-        end
-    end
+graph LR
+    Admin["Admin / Operator"] --> CLI["Tracker CLI"]
+    CLI --> Service["Tracker Windows Service"]
+    Service --> Server["Tracker Server (ASP.NET Core API)"]
 
-    subgraph "Network Layer"
-        HTTP[HTTPS/HTTP<br/>JSON Reports]
-        Internet[Internet]
-    end
+    Service --> Device["Device Info Collector"]
+    Device --> Service
 
-    subgraph "Server System"
-        Server[Tracker.Server<br/>ASP.NET Core Web API]
-        
-        subgraph "Server Endpoints"
-            HealthEndpoint[GET /api/health<br/>Health Check]
-            ReportEndpoint[POST /api/report<br/>Receive Reports]
-        end
-        
-        subgraph "Server Features"
-            GeoService[GeoLocation Service<br/>ipapi.co / ip-api.com]
-            Logger[Structured Logging<br/>Serilog]
-            Parser[Report Parser<br/>JSON Deserialization]
-        end
-        
-        ServerStorage[Server Logs<br/>logs/server-.log]
-    end
+    Server --> Logs["Serilog File Logs"]
+    Server --> Geo["GeoIP Service (External API)"]
 
-    subgraph "Management"
-        Admin[System Administrator]
-    end
+    classDef admin fill:#fff3e0,stroke:#e65100
+    classDef cli fill:#e3f2fd,stroke:#0d47a1
+    classDef service fill:#f3e5f5,stroke:#4a148c
+    classDef server fill:#e8f5e9,stroke:#1b5e20
+    classDef external fill:#fce4ec,stroke:#880e4f
+    classDef logs fill:#ede7f6,stroke:#4527a0
 
-    %% Command flow
-    Admin -->|Manages| CLI
-    CLI -->|Installs/Configures| Service
-    CLI -->|Reads/Writes| Config
-    Service -->|Reads| Config
-    Service -->|Writes| Logs
-
-    %% Data collection
-    Service -->|Collects| DeviceInfo
-    DeviceInfo -->|Gets| SystemInfo
-    DeviceInfo -->|Gets| Network
-    DeviceInfo -->|Gets| Hardware
-    DeviceInfo -->|Gets| Battery
-
-    %% Report flow
-    Service -->|Sends Reports| HTTP
-    HTTP -->|via| Internet
-    Internet -->|to| Server
-
-    %% Server processing
-    Server -->|Receives at| ReportEndpoint
-    ReportEndpoint -->|Parses| Parser
-    Parser -->|Geolocates| GeoService
-    GeoService -->|Gets location for IP| Internet
-    Server -->|Logs| Logger
-    Logger -->|Writes| ServerStorage
-
-    %% Health checks
-    Admin -->|Checks| HealthEndpoint
-    HealthEndpoint -->|Returns status| Admin
-
-    %% Styles
-    classDef client fill:#e1f5fe,stroke:#01579b,stroke-width:2px
-    classDef server fill:#f3e5f5,stroke:#4a148c,stroke-width:2px
-    classDef management fill:#fff3e0,stroke:#e65100,stroke-width:2px
-    classDef network fill:#e8f5e9,stroke:#1b5e20,stroke-width:2px
-    classDef component fill:#fce4ec,stroke:#880e4f,stroke-width:1px
-
-    class CLI,Service,Config,Logs,DeviceInfo client
-    class SystemInfo,Network,Hardware,Battery component
-    class Server,HealthEndpoint,ReportEndpoint,GeoService,Logger,Parser,ServerStorage server
-    class Admin management
-    class HTTP,Internet network
+    class Admin admin
+    class CLI cli
+    class Service service
+    class Server server
+    class Device service
+    class Geo external
+    class Logs logs
 ```
 
 ## Security Considerations
